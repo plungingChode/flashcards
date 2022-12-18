@@ -1,0 +1,7 @@
+.deck-tile {
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+.deck-tile:hover,
+.deck-tile:focus-within {
+  transform: rotateZ(-3deg);
+}

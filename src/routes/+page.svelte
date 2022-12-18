@@ -1,8 +1,11 @@
 <script>
+import { db } from "../supabase";
 
-const a = "1";
-
+const cardCount = db
+  .from("cards")
+  .select("*", { count: "estimated" })
+  .then((data) => data.count);
 </script>
 
 <h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<p># of cards: {#await cardCount} ... {:then count} {count} {/await}</p>
