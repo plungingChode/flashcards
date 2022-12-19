@@ -2,10 +2,8 @@
 import type { Deck, DeckUpdate, DeckUpdateProps } from "~/types";
 import type { DateTime } from "luxon";
 
-import * as Stretchy from "stretchy";
-
 import "./DeckTile.css";
-import { createEventDispatcher } from "svelte";
+import { createEventDispatcher, onMount } from "svelte";
 
 const formatDate = (d: DateTime) => {
   // TODO display stuff like "yesterday", "last week" using `toRelativeCalendar`
@@ -30,9 +28,13 @@ const dispatch = createEventDispatcher<{
   edited: DeckUpdate;
 }>();
 
-$: if (isEdited || isInitializing) {
-  Stretchy.init();
-}
+onMount(async () => {
+  const Stretchy = await import("stretchy");
+
+  if (isInitializing || isEdited) {
+    Stretchy.init();
+  }
+});
 
 let editedProps = asDeckUpdateProps(props);
 
